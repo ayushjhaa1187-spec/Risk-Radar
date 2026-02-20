@@ -132,7 +132,7 @@ Risk-Radar/
 | Service | Target | Trigger |
 | --- | --- | --- |
 | **Frontend** | GitHub Pages | Push to `main` branch |
-| **Backend** | Vercel | Push to `main` branch |
+| **Backend** | Vercel | Push to `main` branch (CI: backend Jest via `.github/workflows/backend-ci.yml`, DB skipped in test) |
 | **Database** | MongoDB Atlas (free tier) OR Supabase | Manual + CI/CD |
 
 ---
