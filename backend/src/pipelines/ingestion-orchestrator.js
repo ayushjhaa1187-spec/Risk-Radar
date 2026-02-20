@@ -195,7 +195,7 @@ export class DataIngestionPipeline {
    * Get country from article
    */
   getCountryFromArticle(article) {
-    const regionToCoun try = {
+    const regionToCountry = {
       peru: 'PE',
       mexico: 'MX',
       vietnam: 'VN',
