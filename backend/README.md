@@ -12,38 +12,34 @@ backend/
 │   ├── index.js                      # Express app entry point
 │   ├── api/
 │   │   └── routes/
-│   │       ├── health.js             # Health check
+│   │       ├── health.js             # Health check (DB-optional in test)
 │   │       ├── risks.js              # Risk operations
 │   │       ├── events.js             # Event operations
 │   │       ├── oem.js                # OEM exposure
 │   │       ├── dashboard.js          # Dashboard data
-│   │       └── regions.js            # Region listing
-│   ├── services/                     # Business logic (TODO)
+│   │       └── regions.js            # Region listing (DB-backed with fallback)
+│   ├── services/
 │   │   ├── risk-scoring.js           # Risk scoring algorithm
 │   │   ├── exposure.js               # OEM exposure calculation
 │   │   └── entity-resolver.js        # Entity matching
-│   ├── scrapers/                     # Data collection (TODO)
-│   │   ├── peru-scraper.js
-│   │   ├── mexico-scraper.js
-│   │   └── vietnam-scraper.js
-│   ├── pipelines/                    # Data processing (TODO)
-│   │   ├── translation.js            # Multi-language translation
+│   ├── scrapers/
+│   │   └── peru-scraper.js           # Peru signals (MVP)
+│   ├── pipelines/
 │   │   └── nlp-classifier.js         # Event classification
 │   └── utils/
 │       ├── logger.js                 # Winston logger
 │       ├── error-handler.js          # Error middleware
 │       └── db.js                     # Database connection pool
-├── tests/                            # Test files (TODO)
+├── tests/                            # Jest tests
 │   ├── unit/
 │   └── integration/
 ├── database/
-│   └── schema.sql                    # Database schema (TODO)
+│   └── schema.sql                    # Database schema
 ├── scripts/
-│   ├── seed-data.js                  # Test data seeding (TODO)
-│   └── migrate.js                    # Run migrations (TODO)
+│   ├── db-init.js                    # Apply schema.sql
+│   └── seed-data.js                  # Seed from docs/mock-data.json
 ├── .env.example                      # Environment template
 ├── package.json
-├── vercel.json                       # Vercel config (TODO)
 └── README.md
 ```
 
@@ -72,6 +68,12 @@ nano .env
 # Create database (see Deployment Guide)
 createdb risk_radar
 
+# Apply schema
+npm run db:init
+
+# Seed minimal data (optional)
+npm run seed
+
 # Start development server
 npm run dev
 ```
@@ -99,14 +101,14 @@ npm run dev
 # Run linting
 npm run lint
 
-# Run tests
+# Run tests (DB-free: health route auto-skips DB in test)
 npm run test
-
-# Run tests with coverage
-npm run test -- --coverage
 
 # Seed test data
 npm run seed
+
+# Apply schema to DB
+npm run db:init
 
 # Production build
 npm run build

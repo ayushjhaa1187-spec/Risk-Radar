@@ -60,9 +60,18 @@ export const getRisks = async (filters = {}) => {
     // Get total count
     let countSql = 'SELECT COUNT(*) as total FROM risks r LEFT JOIN regions reg ON r.region_id = reg.id WHERE r.status = $1';
     const countParams = [status];
+    let countIndex = 2;
+
     if (region) {
-      countSql += ` AND reg.code = $2`;
+      countSql += ` AND reg.code = $${countIndex}`;
       countParams.push(region);
+      countIndex++;
+    }
+
+    if (severity) {
+      countSql += ` AND r.severity >= $${countIndex}`;
+      countParams.push(severity);
+      countIndex++;
     }
 
     const countResult = await queryOne(countSql, countParams);
@@ -243,6 +252,18 @@ export const getEvents = async (filters = {}) => {
     if (event_type) {
       countSql += ` AND e.event_type = $${countParams.length + 1}`;
       countParams.push(event_type);
+    }
+    if (start_date) {
+      countSql += ` AND e.detected_date >= $${countParams.length + 1}`;
+      countParams.push(start_date);
+    }
+    if (end_date) {
+      countSql += ` AND e.detected_date <= $${countParams.length + 1}`;
+      countParams.push(end_date);
+    }
+    if (processed !== null) {
+      countSql += ` AND e.processed = $${countParams.length + 1}`;
+      countParams.push(processed);
     }
 
     const countResult = await queryOne(countSql, countParams);

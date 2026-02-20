@@ -154,7 +154,7 @@ export class DataIngestionPipeline {
       });
 
       // Try to aggregate into risk
-      await this.tryAggregatToRisk(event, facilityId);
+      await this.tryAggregateToRisk(event, facilityId);
 
       return event;
     } catch (err) {
@@ -241,13 +241,47 @@ export class DataIngestionPipeline {
   /**
    * Try to aggregate event into existing risk
    */
-  async tryAggregatToRisk(event, facilityId) {
+  async tryAggregateToRisk(event, facilityId) {
     try {
-      // TODO: Query for existing risks related to this event
-      // If found, link event to risk
-      // If not, might create new risk (depends on severity threshold)
+      // Minimal aggregation: reuse active risk in same region & category if exists
+      const existing = await riskRepository.getRisks({
+        region: event.region_code,
+        severity: event.severity_score ? Math.max(1, Math.round(event.severity_score)) : null,
+        status: 'active',
+        limit: 1,
+        offset: 0,
+      });
 
-      logger.debug('Event aggregation skipped (not yet implemented)');
+      if (existing?.data?.length) {
+        logger.debug('Aggregated to existing risk', {
+          risk_id: existing.data[0].id,
+          event_id: event.id,
+        });
+        return existing.data[0];
+      }
+
+      const riskKey = `AUTO-${event.region_code || 'xx'}-${Date.now()}`;
+      const newRisk = await riskRepository.createRisk({
+        risk_key: riskKey,
+        title: event.title,
+        description: event.description || event.raw_text_translated,
+        category: event.event_type || 'unknown',
+        region_id: event.region_id,
+        severity: event.severity_score || 2,
+        confidence: event.classification_confidence || 0.5,
+        exposure_score: 0.3,
+        start_date: event.occurrence_date || event.detected_date || new Date(),
+        expected_duration_days: 21,
+        affected_facility_ids: facilityId ? [facilityId] : [],
+        estimated_impact_json: {
+          oem_count: 0,
+          tier1_suppliers: 0,
+          primary_commodity: 'unknown',
+        },
+      });
+
+      logger.info('Created new aggregated risk', { risk_id: newRisk.id, event_id: event.id });
+      return newRisk;
     } catch (err) {
       logger.error('Error aggregating event to risk', { error: err.message });
     }

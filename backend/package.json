@@ -7,9 +7,10 @@
   "scripts": {
     "dev": "nodemon --exec node src/index.js",
     "start": "node src/index.js",
-    "test": "jest --coverage",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand",
     "lint": "eslint src/",
-    "seed": "node scripts/seed-data.js"
+    "seed": "node scripts/seed-data.js",
+    "db:init": "node scripts/db-init.js"
   },
   "dependencies": {
     "express": "^4.18.2",

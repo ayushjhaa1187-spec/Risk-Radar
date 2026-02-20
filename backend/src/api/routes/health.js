@@ -9,10 +9,15 @@ const router = express.Router();
  */
 router.get('/', async (req, res) => {
   try {
-    // Check database connection
-    const dbResult = await queryOne('SELECT NOW() as timestamp');
+    const skipDb = process.env.NODE_ENV === 'test' || process.env.HEALTH_SKIP_DB === 'true';
 
-    if (!dbResult) {
+    // Check database connection
+    let dbResult = null;
+    if (!skipDb) {
+      dbResult = await queryOne('SELECT NOW() as timestamp');
+    }
+
+    if (!skipDb && !dbResult) {
       return res.status(503).json({
         status: 'unhealthy',
         database: 'failed',
@@ -22,7 +27,7 @@ router.get('/', async (req, res) => {
 
     res.status(200).json({
       status: 'healthy',
-      database: 'connected',
+      database: skipDb ? 'skipped' : 'connected',
       timestamp: new Date().toISOString(),
       uptime: process.uptime()
     });

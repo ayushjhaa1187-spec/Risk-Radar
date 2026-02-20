@@ -60,12 +60,15 @@ app.use((req, res) => {
 // Global Error Handler
 app.use(errorHandler);
 
-// Start Server
-app.listen(PORT, () => {
-  logger.info(`Server started on port ${PORT}`, {
-    environment: process.env.NODE_ENV,
-    url: `http://localhost:${PORT}`
-  });
-});
+let server = null;
 
-export default app;
+if (process.env.NODE_ENV !== 'test') {
+  server = app.listen(PORT, () => {
+    logger.info(`Server started on port ${PORT}`, {
+      environment: process.env.NODE_ENV,
+      url: `http://localhost:${PORT}`
+    });
+  });
+}
+
+export { app as default, server };
