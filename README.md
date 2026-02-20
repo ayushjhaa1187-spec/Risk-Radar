@@ -194,7 +194,7 @@ npm install
 cp .env.example .env.local
 # Edit .env.local with backend API URL
 npm run dev
-# App runs on http://localhost:3000
+# App runs on http://localhost:5173
 ```
 
 ---
@@ -211,11 +211,11 @@ npm run dev
 - [ ] Step 7: REST API endpoints
 
 **Frontend (Parallel):**
-- [ ] Basic React app setup
-- [ ] Component structure (Dashboard, HeatMap, EventFeed, ExposureTable)
-- [ ] Mock data integration
-- [ ] GitHub Pages setup
-- [ ] Integration with real backend API
+- [x] Basic React app setup (Vite + Tailwind)
+- [x] Component structure (Dashboard, HeatMap, EventFeed, ExposureTable, Alerts)
+- [x] Mock data integration (fallback to docs/mock-data)
+- [x] GitHub Pages setup (gh-pages workflow)
+- [ ] Integration with real backend API (waiting on backend deploy)
 
 **DevOps:**
 - [ ] GitHub Actions for CI/CD
