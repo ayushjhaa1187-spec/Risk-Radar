@@ -1,0 +1,295 @@
+{
+  "dashboardSummary": {
+    "global_risk_score": 0.62,
+    "active_risks_count": 127,
+    "regions": [
+      {
+        "region": "peru",
+        "risk_score": 0.78,
+        "active_risks": 45,
+        "recent_events": 12,
+        "primary_commodities": ["copper"],
+        "affected_oems": 18,
+        "map_color": "red"
+      },
+      {
+        "region": "mexico",
+        "risk_score": 0.48,
+        "active_risks": 32,
+        "recent_events": 8,
+        "primary_commodities": ["copper", "semiconductors"],
+        "affected_oems": 12,
+        "map_color": "orange"
+      },
+      {
+        "region": "vietnam",
+        "risk_score": 0.35,
+        "active_risks": 50,
+        "recent_events": 5,
+        "primary_commodities": ["semiconductors", "electronics"],
+        "affected_oems": 22,
+        "map_color": "yellow"
+      }
+    ],
+    "critical_alerts": [
+      {
+        "risk_id": "PECU-2026-0045",
+        "title": "Strike vote at Las Bambas copper mine",
+        "severity": 4,
+        "oems_affected": 8,
+        "time_to_impact_days": 28
+      },
+      {
+        "risk_id": "PECU-2026-0043",
+        "title": "Environmental permit suspension in Espinar region",
+        "severity": 3,
+        "oems_affected": 5,
+        "time_to_impact_days": 14
+      }
+    ],
+    "recent_events_timeline": [
+      {
+        "event_id": "EV-PECU-20260220-001",
+        "title": "Las Bambas workers schedule strike vote",
+        "timestamp": "2026-02-20T08:15:00Z",
+        "region": "peru",
+        "type": "strike"
+      },
+      {
+        "event_id": "EV-PECU-20260219-001",
+        "title": "Environmental agency inspection at Espinar copper deposit",
+        "timestamp": "2026-02-19T14:30:00Z",
+        "region": "peru",
+        "type": "regulatory_action"
+      },
+      {
+        "event_id": "EV-MEXCU-20260218-001",
+        "title": "Mexico copper concentrate shipment delayed at port",
+        "timestamp": "2026-02-18T10:20:00Z",
+        "region": "mexico",
+        "type": "infrastructure_outage"
+      }
+    ]
+  },
+  "risks": {
+    "data": [
+      {
+        "risk_id": "PECU-2026-0045",
+        "title": "Strike vote at Las Bambas copper mine",
+        "region": "peru",
+        "category": "labor_unrest",
+        "severity": 4,
+        "confidence": 0.87,
+        "detected_date": "2026-02-20T08:15:00Z",
+        "start_date": "2026-02-25T00:00:00Z",
+        "expected_duration_days": 21,
+        "description": "Workers at Las Bambas copper mine schedule strike vote over wage disputes. High impact mining facility. Las Bambas account for ~3% of global copper production.",
+        "source": "union_bulletin",
+        "source_url": "https://example.com/union-bulletin",
+        "affected_facilities": ["las_bambas_mine_pe"],
+        "exposure_score": 0.65,
+        "estimated_impact": {
+          "oem_count": 8,
+          "tier1_suppliers": 12,
+          "primary_commodity": "copper",
+          "monthly_volume_usd": 45000000
+        }
+      },
+      {
+        "risk_id": "PECU-2026-0043",
+        "title": "Environmental permit suspension in Espinar region",
+        "region": "peru",
+        "category": "environmental_shutdown",
+        "severity": 3,
+        "confidence": 0.72,
+        "detected_date": "2026-02-19T14:30:00Z",
+        "start_date": "2026-03-01T00:00:00Z",
+        "expected_duration_days": 60,
+        "description": "Environmental agency suspends mining permits in Espinar region due to water quality violations. Affects 2 major copper mines.",
+        "source": "peru_mining_ministry",
+        "source_url": "https://example.com/ministry",
+        "affected_facilities": ["espinar_mine_1_pe", "espinar_mine_2_pe"],
+        "exposure_score": 0.52,
+        "estimated_impact": {
+          "oem_count": 5,
+          "tier1_suppliers": 9,
+          "primary_commodity": "copper",
+          "monthly_volume_usd": 28000000
+        }
+      },
+      {
+        "risk_id": "MEXCU-2026-0012",
+        "title": "Mexico copper concentrate shipment delayed at port",
+        "region": "mexico",
+        "category": "infrastructure_outage",
+        "severity": 2,
+        "confidence": 0.81,
+        "detected_date": "2026-02-18T10:20:00Z",
+        "start_date": "2026-02-18T00:00:00Z",
+        "expected_duration_days": 7,
+        "description": "Port authority delays copper concentrate shipments due to equipment maintenance. Short-term supply chain impact.",
+        "source": "mexico_port_authority",
+        "source_url": "https://example.com/port",
+        "affected_facilities": ["veracruz_port_mx"],
+        "exposure_score": 0.25,
+        "estimated_impact": {
+          "oem_count": 3,
+          "tier1_suppliers": 6,
+          "primary_commodity": "copper",
+          "monthly_volume_usd": 12000000
+        }
+      }
+    ],
+    "pagination": {
+      "total": 127,
+      "limit": 50,
+      "offset": 0,
+      "has_more": true
+    }
+  },
+  "events": {
+    "data": [
+      {
+        "event_id": "EV-PECU-20260220-001",
+        "title": "Las Bambas workers schedule strike vote",
+        "event_type": "strike",
+        "severity": 3,
+        "confidence": 0.87,
+        "detected_date": "2026-02-20T08:15:00Z",
+        "occurrence_date": "2026-02-25T00:00:00Z",
+        "description": "Workers at Las Bambas copper mine schedule strike vote over wage disputes.",
+        "source": "peru_labor_union_bulletin",
+        "source_url": "https://example.com/union",
+        "raw_text_translated": "Los trabajadores de la mina Las Bambas convocan a votación de huelga por disputas salariales.",
+        "entities_detected": [
+          {
+            "entity": "Las Bambas",
+            "type": "facility",
+            "facility_id": "las_bambas_mine_pe"
+          },
+          {
+            "entity": "Copper",
+            "type": "commodity",
+            "commodity_code": "copper_cathode"
+          }
+        ],
+        "region": "peru",
+        "geo_coordinates": {
+          "latitude": -13.9667,
+          "longitude": -70.6833
+        }
+      },
+      {
+        "event_id": "EV-PECU-20260219-001",
+        "title": "Environmental agency inspection at Espinar copper deposit",
+        "event_type": "regulatory_action",
+        "severity": 2,
+        "confidence": 0.72,
+        "detected_date": "2026-02-19T14:30:00Z",
+        "occurrence_date": "2026-02-19T00:00:00Z",
+        "description": "Environmental agency begins inspection of Espinar copper deposit.",
+        "source": "peru_mining_ministry",
+        "source_url": "https://example.com/ministry",
+        "raw_text_translated": "Agencia ambiental inicia inspección en yacimiento de cobre Espinar.",
+        "entities_detected": [
+          {
+            "entity": "Espinar",
+            "type": "facility",
+            "facility_id": "espinar_mine_1_pe"
+          },
+          {
+            "entity": "Copper",
+            "type": "commodity",
+            "commodity_code": "copper_ore"
+          }
+        ],
+        "region": "peru",
+        "geo_coordinates": {
+          "latitude": -14.0167,
+          "longitude": -71.1833
+        }
+      }
+    ],
+    "pagination": {
+      "total": 34,
+      "limit": 20,
+      "offset": 0
+    }
+  },
+  "oemExposure": {
+    "oem": {
+      "oem_id": "FORD-NA",
+      "name": "Ford Motor Company",
+      "headquarters": "USA"
+    },
+    "exposure_summary": {
+      "total_supply_chain_value_usd": 280000000,
+      "at_risk_value_usd": 42000000,
+      "at_risk_percentage": 15,
+      "risk_score": 0.58,
+      "confidence": 0.81
+    },
+    "commodity_exposures": [
+      {
+        "commodity": "copper",
+        "dependency_pct": 18,
+        "top_source_region": "peru",
+        "regional_concentration_risk": "HIGH",
+        "tier2_suppliers": 8,
+        "active_risks_count": 3,
+        "disruption_probability_6w": 0.42,
+        "estimated_impact_days": 28,
+        "alternative_suppliers": [
+          {
+            "region": "mexico",
+            "capacity_available_tonnes": 15000,
+            "lead_time_weeks": 2
+          }
+        ]
+      }
+    ],
+    "top_risks": [
+      {
+        "risk_id": "PECU-2026-0045",
+        "title": "Strike vote at Las Bambas copper mine",
+        "severity": 4,
+        "impact_to_oem": "HIGH",
+        "time_to_impact_days": 28
+      }
+    ],
+    "forecast_6weeks": {
+      "reliability_score": 0.82,
+      "expected_disruptions": 1,
+      "expected_duration_days": 21,
+      "recommended_buffer_weeks": 3
+    }
+  },
+  "regions": {
+    "data": [
+      {
+        "region_code": "peru",
+        "region_name": "Peru",
+        "country": "Peru",
+        "primary_commodities": ["copper", "lithium"],
+        "risk_level": "HIGH",
+        "monitored_since": "2026-01-15"
+      },
+      {
+        "region_code": "mexico",
+        "region_name": "Mexico",
+        "country": "Mexico",
+        "primary_commodities": ["copper", "semiconductors", "auto_parts"],
+        "risk_level": "MEDIUM",
+        "monitored_since": "2026-01-15"
+      },
+      {
+        "region_code": "vietnam",
+        "region_name": "Vietnam",
+        "country": "Vietnam",
+        "primary_commodities": ["semiconductors", "electronics"],
+        "risk_level": "MEDIUM",
+        "monitored_since": "2026-01-15"
+      }
+    ]
+  }
+}
